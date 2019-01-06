@@ -1,12 +1,29 @@
-<?= $this->title = 'Modül çalışıyor.'; ?>
+<?php
+use yii\data\ActiveDataProvider;
+use kouosl\platformer\models\Games;
+
+//Game info
+$dataprovider = new ActiveDataProvider([
+    'query' => Games::find()
+]);
+$gamemodels = $dataprovider->GetModels();
+?>
+
 <div class="site-index">
 
-    <div class="jumbotron">
-        <h1>Kou Osl Yii2 App</h1>
+        <!--h1>Oyunlar</h1-->
 
-        <p class="lead">Örnek uygulamayı başarılı bir şekilde çalıştırdınız.</p>
+        <div class="grid-container">
+        
 
-        <p><a class="btn btn-lg btn-success" href="#">Modüller ve konfürgasyon!</a></p>
-    </div>
+        <?php
+
+        //echo yii::$app->session->get('lang');
+        
+        for ($i = 0; $i<count($gamemodels);$i++)
+                echo '<div class="grid-item"><a href="/platformer/game?id='.($i+1).'"><p><img width="200" height="200" src="'.$gamemodels[$i]['icon'].'"/></p><p>'.$gamemodels[$i]['title'].'</p></a></div>';
+        ?>
+        
+        </div>
 
 </div>

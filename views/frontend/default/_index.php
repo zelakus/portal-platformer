@@ -1,18 +1,15 @@
 <?php
 use kouosl\theme\helpers\Html;
 use kouosl\theme\widgets\Portlet;
+use kouosl\platformer\Module; 
 
-$this->title = 'Index Sample';
+$this->title = Module::t('platformer','Games');
 $data['title'] = Html::encode($this->title);
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = $this->title;
 
 
-
-Portlet::begin(['title' => $this->title,'subTitle' => 'samples data','icon' => 'glyphicon glyphicon-cog']);
+Portlet::begin(['title' => $this->title]); //, 'href'=>'platformer'
 
 echo $this->render('index');
 
 Portlet::end();
-
-
-

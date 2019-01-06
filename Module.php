@@ -19,7 +19,7 @@ class Module extends \kouosl\base\Module
     public function init()
     {
         parent::init();
-
+        $this->registerTranslations();
         // custom initialization code goes here
     }
     public function behaviors()
@@ -56,9 +56,12 @@ class Module extends \kouosl\base\Module
 
     }
 
+    public static $isInit = false;
     public function registerTranslations()
     {
-        Yii::$app->i18n->translations['site/*'] = [
+        if (Module::$isInit)
+            return;
+        Yii::$app->i18n->translations['platformer/*'] = [
             'class' => 'yii\i18n\PhpMessageSource',
             'sourceLanguage' => 'en-US',
             'basePath' => '@kouosl/platformer/messages',
@@ -66,10 +69,12 @@ class Module extends \kouosl\base\Module
                 'platformer/platformer' => 'platformer.php',
             ],
         ];
+        Module::$isInit = true;
     }
 
-    public static function t($category, $message, $params = [], $language = null)
+    public function t($category, $message, $params = [], $language = null)
     {
+        Module::registerTranslations();
         return Yii::t('platformer/'. $category, $message, $params, $language);
     }
 
